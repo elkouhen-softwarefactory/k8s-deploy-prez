@@ -1,9 +1,14 @@
 == Déploiement Impératif
 
+Déploiement via "kubectl run"
+
+* Similaire au "docker run"
+* Méthode non préconisée (préferer les déploiements déclaratifs)
+* Utile pour démarrer rapidement
+
 === Démarrage du POD
 
-[source, bash]
-----
+```bash
 # kubectl create deployment books-api --image elkouhen/books-api
 deployment "books-api" created
 
@@ -16,24 +21,22 @@ replicaset.extensions/books-api-7f488f97d6   1         1         1       3m45s
 
 NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.extensions/books-api   1/1     1            1           3m45s
-----
+```
 
-=== Appel du service books-api (via IP POD)
+=== Test du service books-api (via IP POD)
 
-[source, bash]
-----
+```bash
 # kubectl get pod -o wide -l app=books-api
 NAME                         READY   STATUS    RESTARTS   AGE     IP          NODE                NOMINATED NODE
 books-api-5649ff5579-khzwn   1/1     Running   0          2m13s   10.46.0.1   vps267694.ovh.net   <none>
 
 # curl http://10.46.0.1:8080/books
 [{"id":1,"title":"Design Pattern"},{"id":2,"title":"Effective Java"},{"id":3,"title":"C++"}]
-----
+```
 
-=== Création du Service
+=== Déploiement du Service
 
-[source, bash]
-----
+```bash
 # kubectl expose deployment books-api --port=80 --target-port=8080 --type=LoadBalancer
 service/books-api exposed
 
@@ -43,12 +46,11 @@ books-api   LoadBalancer   10.99.244.242   <pending>     80:30254/TCP   15s
 
 # curl http://10.99.244.242/books
 [{"id":1,"title":"Design Pattern"},{"id":2,"title":"Effective Java"},{"id":3,"title":"C++"}]
-----
+```
 
-=== Appel du Service books-api (via IP SVC)
+=== Test du Service (via IP SVC)
 
-[source, bash]
-----
+```bash
 # curl http://10.99.244.242/books
 [{"id":1,"title":"Design Pattern"},{"id":2,"title":"Effective Java"},{"id":3,"title":"C++"}]
 
@@ -57,4 +59,4 @@ pod "books-56d6bd4755-srzvd" deleted
 
 # curl http://10.99.244.242/books
 [{"id":1,"title":"Design Pattern"},{"id":2,"title":"Effective Java"},{"id":3,"title":"C++"}]
-----
+```

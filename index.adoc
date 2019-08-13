@@ -15,18 +15,25 @@
 :source-highlighter: highlightjs
 :highlightjs-theme: highlight.js/src/styles/idea.css
 
-= Déploiement d'Applications Kubernetes : Poste de Dev & Intégration Continue
+= Déploiement d'Applications Kubernetes
 
 == Qui suis-je ?
 
 * Mehdi EL KOUHEN
 * Dev Nantais @ Ippon
-* Blog : 
 * Email : melkouhen@ippon.fr
 
 == Kubernetes
 
-Gère le Déploiement, Maintenance et Scaling d'applications conteneurisées
+Objectif : automatiser le déploiement, la mise à l’échelle et la gestion des applications conteneurisées
+
+=== Concepts Kubernetes
+
+[%step]
+* Pod : Elémént unitaire de déploiement (1 ou +eurs conteneurs)
+* Replica Set : Gère le nombre de replicas d'un Pod
+* Deployment : Gère le déploiement, la mise à jour de Pods et Replica Set
+* Service : Point d'accès (non éphémère) à des pods
 
 == Plan
 
@@ -36,14 +43,6 @@ Gère le Déploiement, Maintenance et Scaling d'applications conteneurisées
 * Packaging des confs de déploiement
 * Déploiement "Poste de Dev"
 * Déploiement "Intégration Continue"
-
-=== Concepts Kubernetes
-
-[%step]
-* Pod : Elémént unitaire de déploiement (1 ou +eurs conteneurs)
-* Replica Set : Gère le nombre de replicas d'un Pod
-* Deployment : Gère le déploiement, la mise à jour de Pods et Replica Set
-* Service : Point d'accès (non éphémère) à des pods
 
 == Structure de l'application à déployer
 

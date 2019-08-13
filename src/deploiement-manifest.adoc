@@ -1,34 +1,35 @@
 == Déploiement Déclaratif
 
-=== Démarrage du POD
+Déploiement via des fichiers Manifests
 
-[source, yaml]
-----
+=== Manifest du Deployment
+
+```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  labels:
+    app: books-api
   name: books-api
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-api
   template:
     metadata:
       labels:
         app: books-api
     spec:
       containers:
-      - image: opus/books-api
+      - image: elkouhen/books-api
+        imagePullPolicy: IfNotPresent
         name: books-api
-----
+```
 
-[source, bash]
-----
-# kubectl create -f books-api-deployment.yaml
-deployment.extensions/books-api created
-----
+=== Manifest du Service
 
-=== Création du Service
-
-[source, yaml]
-----
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -43,4 +44,12 @@ spec:
   selector:
     app: books-api
   type: LoadBalancer
+```
+
+=== Déploiement des Manifests
+
+[source, bash]
+----
+# Déploiement de tous les Manifests du répertoire
+$> kubectl create -f src/main/kubernetes
 ----

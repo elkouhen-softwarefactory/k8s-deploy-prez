@@ -26,7 +26,7 @@ deploy:
   helm:
     releases:
     - name: books-gui
-      chartPath: ../charts/books-gui
+      chartPath: ../app-charts/books-gui
       setValues:
         ingress.enabled: false
         h2.enabled: false
@@ -48,7 +48,7 @@ deploy:
 
 [source, yaml]
 ----
-apiVersion: skaffold/v1beta1
+apiVersion: skaffold/v1beta13
 kind: Config
 build:
   artifacts:
@@ -57,33 +57,36 @@ build:
 deploy:
   helm:
     releases:
-    - name: books-api
-      chartPath: ../charts/books-api
-      setValues:
-        auth.htpassword: dXNlcjE6JGFwcjEkcHFTb3VWTE4kQ2EvQVNKSFhLU2dJSlpsd295andtMQ==
-        ingress.enabled: false
-        h2.enabled: false
-        service.type: LoadBalancer
-      setValueTemplates:
-        image.tag: "{{.DIGEST}}"
+    - name: books-api-dev
+      chartPath: ../app-charts/books-api
+      overrides:
+        auth:
+          enabled: false
+        h2:
+          enabled: false
+        ingress:
+          enabled: false
 ----
 
 === Configuration de JIB
 
 [source, xml]
 ----
-<?xml version="1.0" encoding="UTF-8"?>
 <plugin>
    <groupId>com.google.cloud.tools</groupId>
    <artifactId>jib-maven-plugin</artifactId>
-   <version>0.9.11</version>
+   <version>1.4.0</version>
    <configuration>
+      <allowInsecureRegistries>true</allowInsecureRegistries>
       <container>
          <jvmFlags>
+            <jvmFlag>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmFlag>
             <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-            <jvmFlag>-XX:+UnlockExperimentalVMOptions</jvmFlag>
-            <jvmFlag>-XX:+UseCGroupMemoryLimitForHeap</jvmFlag>
          </jvmFlags>
+         <ports>
+            <port>8080</port>
+            <port>5005</port>
+         </ports>
       </container>
    </configuration>
 </plugin>
@@ -112,18 +115,4 @@ kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        6m
 {"id":2,"title":"Effective Java","author":"Joshua Bloch"},\
 {"id":3,"title":"The C++ Programming Language","author":"Bjarne Stroustrup"},\
 {"id":4,"title":"The Clean Coder: A Code of Conduct for Professional Programmers","author":"Robert C. Martin"}]
-----
-
-=== Test du back end via port-forward
-
-[source, bash]
-----
-kubectl port-forward  $(kubectl get pod | grep books-api | awk '{print $1;}') 8080:80
-----
-
-=== Test du front end via endpoint minikube
-
-[source, bash]
-----
-minikube service books-api --url
 ----
