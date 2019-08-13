@@ -1,0 +1,7 @@
+= Déploiement d'Applications Kubernetes
+
+== Qui suis-je ?
+
+* Mehdi EL KOUHEN
+* Dev Nantais @ Ippon
+* Email : melkouhen@ippon.fr

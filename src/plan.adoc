@@ -1,0 +1,8 @@
+== Plan
+
+
+* Déploiement Impératif
+* Déploiement Déclaratif
+* Packaging des confs de déploiement
+* Déploiement "Poste de Dev"
+* Déploiement "Intégration Continue"

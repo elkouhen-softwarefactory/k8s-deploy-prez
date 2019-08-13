@@ -1,0 +1,10 @@
+
+== Objectifs
+
+* Déployer en continu une application Java dans K8s
+* Déployer via IC
+
+++++
+<img src="assets/logos-java.png" style="display: block; margin-left: auto; margin-right: auto; height: 20%"></img>
+</p>
+++++
