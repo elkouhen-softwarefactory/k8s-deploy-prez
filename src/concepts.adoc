@@ -1,0 +1,21 @@
+== Kubernetes
+
+Objectif : automatiser le déploiement, la mise à l’échelle et la gestion des applications conteneurisées
+
+++++
+<p style="display: inline-block;  vertical-align:middle">Site Web : <a href="https://kubernetes.io/fr"/>kubernetes.io</a> <img src="assets/kubernetes.png" style="width: 126px; vertical-align:middle"></img>
+</p>
+++++
+
+=== Vocabulaire
+
+* Pod
+** Elément unitaire de déploiement (1 ou + conteneurs)
+** Objet éphémère
+
+* Service
+** Point d'accès abstrait aux Pods
+** Objet non éphémère
+
+* Deployment
+** Gère le déploiements des Pods

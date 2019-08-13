@@ -23,17 +23,7 @@
 * Dev Nantais @ Ippon
 * Email : melkouhen@ippon.fr
 
-== Kubernetes
-
-Objectif : automatiser le déploiement, la mise à l’échelle et la gestion des applications conteneurisées
-
-=== Concepts Kubernetes
-
-[%step]
-* Pod : Elémént unitaire de déploiement (1 ou +eurs conteneurs)
-* Replica Set : Gère le nombre de replicas d'un Pod
-* Deployment : Gère le déploiement, la mise à jour de Pods et Replica Set
-* Service : Point d'accès (non éphémère) à des pods
+include::src/deploiement-cli.adoc[]
 
 == Plan
 
