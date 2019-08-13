@@ -1,0 +1,86 @@
+:description: Déploiement Kubernetes
+:email: melkouhen@ippon.fr
+:revealjs_theme: ippon
+:revealjs_width: 1600
+:revealjs_height: 800
+:revealjs_history: True
+:revealjs_center: False
+:revealjs_slideNumber: True
+
+//:title-slide-background-image: assets/title.001.png
+//:backend: revealjs
+
+:icons: font
+//:source-highlighter: pygments
+:source-highlighter: highlightjs
+:highlightjs-theme: highlight.js/src/styles/idea.css
+
+= Déploiement d'Applications Kubernetes : Poste de Dev & Intégration Continue
+
+== Qui suis-je ?
+
+* Mehdi EL KOUHEN
+* Dev Nantais @ Ippon
+* Blog : 
+* Email : melkouhen@ippon.fr
+
+== Kubernetes
+
+Gère le Déploiement, Maintenance et Scaling d'applications conteneurisées
+
+== Plan
+
+[%step]
+* Déploiement Impératif
+* Déploiement Déclaratif
+* Packaging des confs de déploiement
+* Déploiement "Poste de Dev"
+* Déploiement "Intégration Continue"
+
+=== Concepts Kubernetes
+
+[%step]
+* Pod : Elémént unitaire de déploiement (1 ou +eurs conteneurs)
+* Replica Set : Gère le nombre de replicas d'un Pod
+* Deployment : Gère le déploiement, la mise à jour de Pods et Replica Set
+* Service : Point d'accès (non éphémère) à des pods
+
+== Structure de l'application à déployer
+
+* 1 Front End Web (books-gui)
+* 1 Application Java (books-api)
+* 1 Base de Données H2 (h2)
+
+Organisation GitHub : https://github.com/elkouhen-softwarefactory
+
+=== Choix d'Outils
+
+[%step]
+* Helm pour le packaging
+* "Poste de Dev"
+** Minikube comme serveur Kubernetes 
+** Skaffold pour le déploiement "Poste De Dev"
+* "Intégration Continue" (i.e. Jenkins)
+** Helmfile pour le déploiement
+
+include::src/deploiement-cli.adoc[]
+
+include::src/deploiement-manifest.adoc[]
+
+include::src/deploiement-helm.adoc[]
+
+include::src/deploiement-helm-exemple.adoc[]
+
+include::src/deploiement-helm-dependences.adoc[]
+
+//include::deploiement-helm-gestion-ssl.adoc[]
+
+include::src/deploiement-skaffold.adoc[]
+
+include::src/deploiement-jenkins.adoc[]
+
+include::src/deploiement-helm-gestion-secrets.adoc[]
+
+== Merci !!!
+
+Questions ?

@@ -1,0 +1,87 @@
+== Déploiement "Helm"
+
+=== Helm ?
+
+* Gestionnaire de Charts Kubernetes https://helm.sh/
+** Gestion de templates, variables, ...
+** Gestion de dépendances
+** https://github.com/helm/helm/blob/master/docs/related.md#helm-plugins[Plugins] (secrets, restore, ...)
+
+=== Création d'un Chart
+
+[source, bash]
+----
+# helm create books-api
+Creating books-api
+----
+
+=== Structure d'un Chart
+
+|===
+|Fichier |Description
+
+|Chart.yaml
+|Description du Chart (nom, numéros de version du Chart et de l'application)
+
+|values.yaml
+|Variables du Chart
+
+|templates
+|Répertoire contenant les templates des ressources K8s
+
+|===
+
+=== Release d'un Chart Helm
+
+[source, bash]
+----
+# helm package --version 0.1.0 books-api
+# helm repo index . --url https://elkouhen-softwarefactory.github.io/app-charts
+----
+
+Types de dépôts : 
+
+* Appli Web Statique (exemple : Dépôt Github)
+* https://github.com/sonatype-nexus-community/nexus-repository-helm[Plugin Nexus]
+* https://chartmuseum.com/[ChartMuseum]
+
+=== Déploiement d'un Chart Helm
+
+[source, bash]
+----
+# helm repo add app-charts https://elkouhen-softwarefactory.github.io/app-charts
+# helm install --name books-api --values values.yaml app-charts/books-api
+# helm list
+  NAME        	REVISION	UPDATED                 	STATUS  	CHART              	NAMESPACE
+  books-api   	1       	Thu Nov 29 22:29:43 2018	DEPLOYED	books-api-0.1.0    	default
+----
+
+=== Statut du Déploiement
+
+[source, bash]
+----
+# helm status books-api
+LAST DEPLOYED: Fri Aug  9 08:49:02 2019
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Pod(related)
+NAME                        READY  STATUS   RESTARTS  AGE
+books-api-5c5684b449-zktww  1/1    Running  0         97s
+
+==> v1/Service
+NAME       TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)  AGE
+books-api  ClusterIP  10.105.168.77  <none>       80/TCP   97s
+
+==> v1beta2/Deployment
+NAME       READY  UP-TO-DATE  AVAILABLE  AGE
+books-api  1/1    1           1          97s
+
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app=books-api,release=books-api" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl port-forward $POD_NAME 8080:80
+----
